@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sertori Agency — Digital experiences for ambitious brands</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08080a;
+    --bg-elev:#111114;
+    --ink:#f5f5f2;
+    --ink-dim:#9a9a9f;
+    --accent:#EDF4F4;
+    --accent-dim:rgba(237,244,244,0.16);
+    --line:rgba(245,245,242,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent); color:var(--bg); }
+
+  .display{ font-family:'Anton', sans-serif; text-transform:uppercase; letter-spacing:0.01em; }
+  .serif-em{ font-family:'Instrument Serif', serif; font-style:italic; font-weight:400; text-transform:none; letter-spacing:0; color:var(--accent); }
+  .eyebrow{ font-size:12px; letter-spacing:0.28em; text-transform:uppercase; color:var(--ink-dim); font-weight:600; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  /* ambient glow */
+  .glow{
+    position:absolute; border-radius:50%; filter:blur(90px);
+    background:radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    opacity:0.35; pointer-events:none;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px; mix-blend-mode:difference;
+  }
+  .nav-logo{ display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:0.02em; font-size:15px; }
+  .nav-logo svg{ width:26px; height:26px; }
+  .nav-cta{
+    font-size:13px; font-weight:600; letter-spacing:0.04em;
+    border:1px solid var(--ink); padding:9px 18px; border-radius:999px;
+    color:var(--ink); text-decoration:none; transition:all .3s ease;
+  }
+  .nav-cta:hover{ background:var(--ink); color:var(--bg); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; min-height:100svh; display:flex; flex-direction:column;
+    justify-content:center; padding:140px 0 80px; overflow:hidden;
+  }
+  .hero .glow{ width:640px; height:640px; top:-220px; right:-160px; }
+  .hero .glow.two{ width:420px; height:420px; left:-140px; bottom:-140px; opacity:0.18; }
+
+  .hero-title{
+    font-size:clamp(52px, 10.5vw, 148px); line-height:0.92; letter-spacing:-0.01em;
+  }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:32px; display:flex; align-items:center; gap:10px;
+    font-size:11px; letter-spacing:0.25em; color:var(--ink-dim); text-transform:uppercase;
+    opacity:0; animation:fadeUp .9s ease forwards; animation-delay:1s;
+  }
+  .scroll-cue .bar{ width:1px; height:34px; background:linear-gradient(var(--ink-dim), transparent); position:relative; overflow:hidden; }
+  .scroll-cue .bar::after{ content:''; position:absolute; top:-40px; left:0; width:100%; height:40px; background:var(--accent); animation:scrollBar 1.8s ease-in-out infinite; }
+
+  @keyframes riseIn{ to{ transform:translateY(0); } }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(16px); } to{ opacity:1; transform:translateY(0); } }
+  @keyframes scrollBar{ 0%{ top:-40px; } 60%{ top:34px; } 100%{ top:34px; } }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{ opacity:0; transform:translateY(36px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- SERVICES ---------- */
+  .services{ padding:150px 0; }
+  .services-head{ margin-bottom:90px; }
+  .services-head .eyebrow{ margin-bottom:18px; }
+  .services-head h2{ font-size:clamp(34px,5vw,58px); line-height:1.05; max-width:820px; }
+
+  .svc-block{
+    padding:70px 0; border-top:1px solid var(--line); max-width:640px;
+  }
+  .svc-block:last-child{ border-bottom:1px solid var(--line); }
+
+  .svc-num{ font-size:13px; color:var(--accent); font-weight:600; letter-spacing:0.1em; margin-bottom:16px; display:block; }
+  .svc-title{ font-size:clamp(40px,6vw,80px); line-height:0.9; margin-bottom:22px; }
+  .svc-text{ color:var(--ink-dim); font-size:16px; line-height:1.7; max-width:460px; }
+  .svc-tag{ margin-top:26px; display:inline-block; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-dim); border:1px solid var(--line); padding:8px 14px; border-radius:999px; }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{ position:relative; padding:170px 0; text-align:center; overflow:hidden; }
+  .philosophy .glow{ width:560px; height:560px; left:50%; top:50%; transform:translate(-50%,-50%); opacity:0.14; }
+  .philosophy .eyebrow{ display:block; margin-bottom:34px; }
+  .philosophy p{
+    font-family:'Instrument Serif', serif; font-style:italic; font-weight:400;
+    font-size:clamp(28px,4.6vw,54px); line-height:1.3; max-width:920px; margin:0 auto;
+    color:var(--ink);
+  }
+  .philosophy p .accent{ color:var(--accent); }
+
+  /* ---------- PROCESS ---------- */
+  .process{ padding:0 0 150px; }
+  .process-grid{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .process-cell{ border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:42px 30px; min-height:230px; display:flex; flex-direction:column; justify-content:space-between; transition:background .35s ease; }
+  .process-cell:hover{ background:var(--bg-elev); }
+  .process-cell .pnum{ font-family:'Anton',sans-serif; font-size:15px; color:var(--accent); }
+  .process-cell h3{ font-size:21px; margin:20px 0 10px; letter-spacing:0.01em; }
+  .process-cell p{ font-size:13.5px; color:var(--ink-dim); line-height:1.6; }
+  @media (max-width:860px){ .process-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .process-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- CTA ---------- */
+  .cta{ position:relative; padding:170px 0; text-align:center; overflow:hidden; border-top:1px solid var(--line); }
+  .cta .glow{ width:700px; height:700px; left:50%; bottom:-360px; transform:translateX(-50%); opacity:0.3; }
+  .cta h2{ font-size:clamp(40px,8vw,110px); line-height:0.94; }
+  .cta h2 .serif-em{ font-size:0.9em; }
+  .cta-actions{ margin-top:48px; display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
+  .cta-btn{
+    display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+    font-weight:600; font-size:14px; padding:16px 30px; border-radius:999px;
+    transition:all .35s cubic-bezier(.16,1,.3,1);
+  }
+  .cta-btn.primary{ background:var(--accent); color:var(--bg); }
+  .cta-btn.primary:hover{ transform:translateY(-3px); box-shadow:0 12px 30px var(--accent-dim); }
+  .cta-btn.ghost{ border:1px solid var(--line); color:var(--ink); }
+  .cta-btn.ghost:hover{ border-color:var(--ink); }
+
+  /* ---------- FOOTER ---------- */
+  footer{ border-top:1px solid var(--line); padding:36px 0; }
+  .foot-row{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+  .foot-logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:14px; }
+  .foot-logo svg{ width:20px; height:20px; }
+  footer p{ font-size:12.5px; color:var(--ink-dim); }
+  .foot-links{ display:flex; gap:22px; }
+  .foot-links a{ color:var(--ink-dim); font-size:12.5px; text-decoration:none; transition:color .25s ease; }
+  .foot-links a:hover{ color:var(--ink); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; }
+  }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  /* ============================================================
+     PRELOADER — inspirado no padrão Preloader_002 (skiper.ui)
+     ============================================================ */
+  .preloader{
+    position:fixed; inset:0; z-index:300; background:#ffffff;
+    display:flex; align-items:center; justify-content:center;
+    transition:transform .9s cubic-bezier(.76,0,.24,1);
+  }
+  .preloader.hide{ transform:translateY(-101%); }
+  .preloader-inner{ display:flex; flex-direction:column; align-items:center; gap:26px; }
+  .preloader-word-frame{
+    position:relative; min-height:100px; width:100%; max-width:640px;
+    display:flex; align-items:center; justify-content:center; padding:0 24px;
+  }
+  .preloader-word{
+    font-family:'Inter', sans-serif; font-weight:600; font-size:clamp(30px,5vw,44px); line-height:1.5;
+    color:#3a3a3d; letter-spacing:-0.01em; text-align:center;
+    opacity:0; transform:translateY(14px); filter:blur(6px);
+    transition:opacity .22s ease, transform .22s cubic-bezier(.16,1,.3,1), filter .22s ease;
+  }
+  .preloader-word.show{ opacity:1; transform:translateY(0); filter:blur(0px); }
+  .preloader-bar{ width:180px; height:2px; background:rgba(10,10,10,0.14); border-radius:2px; overflow:hidden; }
+  .preloader-bar span{
+    display:block; height:100%; width:100%; background:#0a0a0a;
+    transform:scaleX(0); transform-origin:left; border-radius:2px;
+  }
+
+  /* ============================================================
+     TEXT MORPH — inspirado no componente TextMorph (originkit)
+     "SERTORI" funde-se em "AGENCY" com blur + goo filter
+     ============================================================ */
+  .tm-host{ position:relative; display:block; width:100%; }
+  .tm-defs{ position:absolute; width:0; height:0; overflow:hidden; }
+  .tm-filtered{ display:block; filter:url(#tm-goo); }
+  .tm-inner{ position:relative; display:inline-flex; }
+  .tm-ghost{ visibility:hidden; white-space:nowrap; }
+  .tm-word{
+    position:absolute; left:0; top:50%; white-space:nowrap;
+    transform:translate(0,-50%) scale(0.8); opacity:0;
+    will-change:opacity, filter, transform;
+  }
+  .tm-w1{ color:var(--ink); animation:tmSpin 4s ease-in-out 0s infinite; }
+  .tm-w2{
+    color:var(--ink);
+    animation:tmSpin 4s ease-in-out 2s infinite;
+  }
+  @keyframes tmSpin{
+    0%{ opacity:0; filter:blur(20px); transform:translate(0,-50%) scale(0.8); }
+    25%{ opacity:1; filter:blur(0px); transform:translate(0,-50%) scale(1); }
+    50%{ opacity:1; filter:blur(0px); transform:translate(0,-50%) scale(1); }
+    75%, 100%{ opacity:0; filter:blur(20px); transform:translate(0,-50%) scale(1.2); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .tm-word{ animation:none !important; position:static; display:inline-block; opacity:1; filter:none; transform:none; margin-right:0.28em; }
+    .tm-ghost{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PRELOADER (padrão Preloader_002 · skiper.ui) -->
+<div class="preloader" id="preloader" role="status" aria-live="polite" aria-label="A carregar Sertori Agency">
+  <div class="preloader-inner">
+    <div class="preloader-word-frame"><span class="preloader-word" id="preloaderWord">Welcome</span></div>
+    <div class="preloader-bar"><span id="preloaderBarFill"></span></div>
+  </div>
+</div>
+
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 100 100" fill="none"><path d="M78 24C78 24 68 14 48 14C28 14 18 24 18 36C18 60 82 40 82 64C82 76 72 86 52 86C32 86 22 76 22 76" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>
+    SERTORI
+  </div>
+  <a class="nav-cta" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">Fale connosco</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="glow"></div>
+  <div class="glow two"></div>
+  <div class="wrap">
+    <h1 class="hero-title display tm-host" aria-label="Sertori Agency">
+      <svg class="tm-defs" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="tm-goo">
+            <feColorMatrix in="SourceGraphic" type="matrix"
+              values="1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 25 -9" result="goo"/>
+            <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+          </filter>
+        </defs>
+      </svg>
+      <span class="tm-filtered">
+        <span class="tm-inner">
+          <span class="tm-ghost">SERTORI</span>
+          <span class="tm-word tm-w1">SERTORI</span>
+          <span class="tm-word tm-w2">AGENCY</span>
+        </span>
+      </span>
+    </h1>
+  </div>
+  <div class="scroll-cue"><span class="bar"></span> Scroll</div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="wrap">
+    <div class="svc-block reveal">
+      <div>
+        <span class="svc-num">01 / START</span>
+        <h3 class="svc-title display">Start</h3>
+        <p class="svc-text">Combinamos estratégia, design e digital para criar marcas que se destacam, comunicam e crescem — do zero ao lançamento.</p>
+        <span class="svc-tag">Branding & Lançamento</span>
+      </div>
+    </div>
+
+    <div class="svc-block reveal">
+      <div>
+        <span class="svc-num">02 / WEB</span>
+        <h3 class="svc-title display">Web</h3>
+        <p class="svc-text">Transformamos ideias em experiências digitais pensadas para representar marcas, comunicar com clareza e criar presença online.</p>
+        <span class="svc-tag">Sites & Produtos Digitais</span>
+      </div>
+    </div>
+
+    <div class="svc-block reveal">
+      <div>
+        <span class="svc-num">03 / ESTRATÉGIA</span>
+        <h3 class="svc-title display">Estratégia</h3>
+        <p class="svc-text">Combinamos estratégia, criatividade e pensamento digital para criar experiências que dão destaque às marcas.</p>
+        <span class="svc-tag">Especialistas em Estratégia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="glow"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">A filosofia</span>
+    <p class="reveal">Não construímos apenas presença digital.<br>Construímos a razão pela qual uma marca <span class="accent">é lembrada</span>.</p>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="wrap">
+    <div class="services-head reveal">
+      <span class="eyebrow">Como trabalhamos</span>
+      <h2>Do primeiro contacto ao <span class="serif-em">lançamento</span>.</h2>
+    </div>
+    <div class="process-grid reveal">
+      <div class="process-cell">
+        <span class="pnum display">01</span>
+        <div>
+          <h3>Descobrir</h3>
+          <p>Ouvimos o negócio, o mercado e o objetivo antes de desenhar qualquer solução.</p>
+        </div>
+      </div>
+      <div class="process-cell">
+        <span class="pnum display">02</span>
+        <div>
+          <h3>Estratégia</h3>
+          <p>Definimos posicionamento, tom e plano digital alinhados com o crescimento da marca.</p>
+        </div>
+      </div>
+      <div class="process-cell">
+        <span class="pnum display">03</span>
+        <div>
+          <h3>Design</h3>
+          <p>Criamos identidade e experiências visuais que comunicam com clareza e destaque.</p>
+        </div>
+      </div>
+      <div class="process-cell">
+        <span class="pnum display">04</span>
+        <div>
+          <h3>Lançar</h3>
+          <p>Colocamos tudo online — e acompanhamos os primeiros passos da marca no mundo digital.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contacto">
+  <div class="glow"></div>
+  <div class="wrap">
+    <span class="eyebrow reveal">Vamos começar</span>
+    <h2 class="display reveal" style="margin-top:22px;">Pronto para <span class="serif-em">destacar</span><br>a sua marca?</h2>
+    <div class="cta-actions reveal">
+      <a class="cta-btn primary" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">Falar no Instagram</a>
+      <a class="cta-btn ghost" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">@sertoriagency</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div class="foot-logo">
+      <svg viewBox="0 0 100 100" fill="none"><path d="M78 24C78 24 68 14 48 14C28 14 18 24 18 36C18 60 82 40 82 64C82 76 72 86 52 86C32 86 22 76 22 76" stroke="currentColor" stroke-width="9" stroke-linecap="round"/></svg>
+      SERTORI AGENCY
+    </div>
+    <p>© 2026 Sertori Agency — Portugal | Worldwide</p>
+    <div class="foot-links">
+      <a href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold:0.15 });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+<script>
+  // PRELOADER — fundo branco, ciclo de "bem-vindo" nas 8 línguas mais faladas do mundo,
+  // depois "wipe" para revelar a Main (padrão Preloader_002 · skiper.ui)
+  (function(){
+    const pre = document.getElementById('preloader');
+    if(!pre) return;
+    const wordEl = document.getElementById('preloaderWord');
+    const barEl = document.getElementById('preloaderBarFill');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced){ pre.remove(); return; }
+
+    // Inglês, mandarim, hindi, espanhol, francês, árabe, português, bengali
+    const WORDS = ['Welcome', '欢迎', 'स्वागत है', 'Bienvenido', 'Bienvenue', 'أهلاً بك', 'Bem-vindo', 'স্বাগতম'];
+    const FADE = 220;  // ms — precisa bater com a transition do CSS (.preloader-word)
+    const HOLD = 60;   // ms — tempo nítido antes de desfocar de novo (mais 0.2s rápido)
+    const SLOT = FADE + HOLD + FADE; // fade-in + hold + fade-out de cada palavra
+    const DURATION = WORDS.length * SLOT;
+
+    document.documentElement.style.overflow = 'hidden';
+
+    let i = 0;
+    let cancelled = false;
+
+    function showWord(){
+      if(cancelled || !wordEl) return;
+      wordEl.textContent = WORDS[i];
+      requestAnimationFrame(() => wordEl.classList.add('show'));
+      setTimeout(() => {
+        if(cancelled) return;
+        wordEl.classList.remove('show');
+        setTimeout(() => {
+          if(cancelled) return;
+          i = (i + 1) % WORDS.length;
+          showWord();
+        }, FADE);
+      }, FADE + HOLD);
+    }
+    showWord();
+
+    const start = performance.now();
+    function frame(now){
+      const t = Math.min(1, (now - start) / DURATION);
+      if(barEl) barEl.style.transform = `scaleX(${t})`;
+      if(t < 1){ requestAnimationFrame(frame); } else { finish(); }
+    }
+    requestAnimationFrame(frame);
+
+    function finish(){
+      cancelled = true;
+      setTimeout(() => {
+        pre.classList.add('hide');
+        pre.setAttribute('aria-hidden', 'true');
+        document.documentElement.style.overflow = '';
+        setTimeout(() => pre.remove(), 950);
+      }, 260);
+    }
+  })();
+</script>
+
+</body>
+</html>

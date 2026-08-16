@@ -6,6 +6,7 @@
 <title>Sertori Agency — Digital experiences for ambitious brands</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://reinhart1010.github.io/aileron/aileron.lite.min.css" rel="stylesheet">
 <style>
   :root{
     --bg:#08080a;
@@ -64,6 +65,19 @@
   .hero .glow{ width:640px; height:640px; top:-220px; right:-160px; }
   .hero .glow.two{ width:420px; height:420px; left:-140px; bottom:-140px; opacity:0.18; }
 
+  /* ---------- FEATURE (Design que representa...) ---------- */
+  .feature{ position:relative; padding:170px 0; text-align:center; overflow:hidden; }
+  .feature .glow{ width:560px; height:560px; left:50%; top:50%; transform:translate(-50%,-50%); opacity:0.14; }
+  .feature-copy{
+    position:relative; z-index:1; text-align:center;
+    display:flex; flex-direction:column; align-items:center;
+  }
+  .feature-copy h2{
+    font-family:'Aileron', 'Inter', sans-serif; font-weight:800; letter-spacing:-0.015em;
+    font-size:clamp(42px,7.4vw,88px); line-height:1.08; margin-bottom:26px; color:var(--ink);
+  }
+  .feature-copy p{ color:var(--ink-dim); font-size:16px; line-height:1.7; max-width:480px; margin:0 auto; }
+
   .hero-title{
     font-size:clamp(52px, 10.5vw, 148px); line-height:0.92; letter-spacing:-0.01em;
   }
@@ -86,19 +100,151 @@
 
   /* ---------- SERVICES ---------- */
   .services{ padding:150px 0; }
-  .services-head{ margin-bottom:90px; }
-  .services-head .eyebrow{ margin-bottom:18px; }
-  .services-head h2{ font-size:clamp(34px,5vw,58px); line-height:1.05; max-width:820px; }
+
+  .svc-wrap{ position:relative; padding-left:56px; }
+  .services-rail{ position:absolute; left:0; top:6px; bottom:6px; width:1px; }
+  .services-rail .rail-dot{
+    position:absolute; top:0; left:-3px; width:7px; height:7px; border-radius:50%;
+    background:var(--accent); box-shadow:0 0 10px var(--accent);
+  }
+  .services-rail .rail-line{ position:absolute; top:16px; bottom:0; left:0; width:1px; background:var(--line); }
+  .services-rail .rail-label{
+    position:absolute; top:38px; left:-7px; writing-mode:vertical-rl; transform:rotate(180deg);
+    font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:var(--ink-dim);
+    font-weight:600; white-space:nowrap;
+  }
+  @media (max-width:760px){ .svc-wrap{ padding-left:0; } .services-rail{ display:none; } }
 
   .svc-block{
-    padding:70px 0; border-top:1px solid var(--line); max-width:640px;
+    display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+    padding:70px 0; border-top:1px solid var(--line);
   }
   .svc-block:last-child{ border-bottom:1px solid var(--line); }
+  @media (max-width:860px){ .svc-block{ grid-template-columns:1fr; gap:34px; padding:50px 0; } .svc-visual{ order:2; } }
 
-  .svc-num{ font-size:13px; color:var(--accent); font-weight:600; letter-spacing:0.1em; margin-bottom:16px; display:block; }
+  .svc-num{ font-size:15px; color:var(--accent); font-weight:400; letter-spacing:0.04em; margin-bottom:14px; display:block; text-transform:none; }
   .svc-title{ font-size:clamp(40px,6vw,80px); line-height:0.9; margin-bottom:22px; }
   .svc-text{ color:var(--ink-dim); font-size:16px; line-height:1.7; max-width:460px; }
   .svc-tag{ margin-top:26px; display:inline-block; font-size:12px; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink-dim); border:1px solid var(--line); padding:8px 14px; border-radius:999px; }
+
+  /* ============================================================
+     MAGNETIC BUTTON — inspirado no componente Magnetic Hover Button (originkit)
+     usado nas tags dos serviços, levam ao Instagram
+     ============================================================ */
+  .magnetic-btn{
+    position:relative; overflow:hidden; display:inline-flex; align-items:center;
+    text-decoration:none; cursor:pointer; border-color:var(--line);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), border-color .3s ease;
+    will-change:transform;
+  }
+  .magnetic-btn:hover{ border-color:var(--ink); }
+  .mb-fill{
+    position:absolute; top:var(--sy,50%); left:var(--sx,50%);
+    width:var(--sd,0px); height:var(--sd,0px);
+    margin-top:calc(var(--sd,0px) * -0.5); margin-left:calc(var(--sd,0px) * -0.5);
+    border-radius:50%; background:var(--ink); transform:scale(0);
+    transition:transform .4s cubic-bezier(.16,1,.3,1);
+    pointer-events:none; z-index:0;
+  }
+  .magnetic-btn.hover .mb-fill{ transform:scale(1); }
+  .mb-label{
+    position:relative; z-index:1; display:inline-flex; align-items:center; gap:8px;
+    transition:color .35s ease;
+  }
+  .mb-label svg{ width:13px; height:13px; flex-shrink:0; transition:color .35s ease, transform .35s cubic-bezier(.16,1,.3,1); }
+  .magnetic-btn.hover .mb-label{ color:var(--bg); }
+  .magnetic-btn.hover .mb-label svg{ transform:rotate(8deg) scale(1.1); }
+
+  .svc-visual{ display:flex; align-items:center; justify-content:center; height:280px; color:var(--ink); }
+  .svc-visual.tall{ height:auto; min-height:280px; padding:20px 0; }
+
+  /* Web — laptop mock */
+  .laptop-mock{ position:relative; width:100%; max-width:420px; margin:0 auto; transition:transform .5s cubic-bezier(.16,1,.3,1); }
+  .svc-block:hover .laptop-mock{ transform:translateY(-4px); }
+  .laptop-screen{
+    position:relative; background:#0b0b0d; border:8px solid #1c1c1f; border-bottom:none;
+    border-radius:12px 12px 0 0; aspect-ratio:16/10.5; overflow:hidden;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,.85);
+  }
+  .laptop-topbar{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:10px 16px; border-bottom:1px solid rgba(245,245,242,.08); position:relative; z-index:2;
+  }
+  .laptop-logo{ font-family:'Anton',sans-serif; font-size:13px; }
+  .laptop-nav{ display:flex; gap:14px; font-size:8.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); }
+  @media (max-width:480px){ .laptop-nav{ display:none; } }
+  .laptop-contact{
+    font-size:8px; letter-spacing:.08em; text-transform:uppercase; border:1px solid var(--line);
+    padding:5px 10px; border-radius:999px; color:var(--ink); flex-shrink:0;
+  }
+  .laptop-hero{ position:relative; padding:22px 18px; height:calc(100% - 38px); }
+  .laptop-title{
+    font-family:'Instrument Serif', serif; font-weight:400; font-size:clamp(16px,2.7vw,25px);
+    line-height:1.15; margin-bottom:10px; position:relative; z-index:2;
+  }
+  .laptop-sub{ font-size:9px; color:var(--ink-dim); line-height:1.5; max-width:150px; margin-bottom:14px; position:relative; z-index:2; }
+  .laptop-btn{
+    display:inline-block; font-size:8px; letter-spacing:.1em; text-transform:uppercase;
+    border:1px solid var(--line); padding:7px 12px; border-radius:999px; position:relative; z-index:2;
+  }
+  .laptop-mountain{
+    position:absolute; right:0; bottom:0; width:60%; height:82%;
+    background:linear-gradient(180deg, rgba(245,245,242,.05), rgba(245,245,242,.18) 55%, rgba(245,245,242,.05));
+    clip-path:polygon(0% 100%, 12% 55%, 26% 72%, 40% 38%, 55% 64%, 68% 30%, 82% 58%, 100% 42%, 100% 100%);
+    opacity:.85;
+  }
+  .laptop-base{
+    height:12px; background:linear-gradient(#242426,#131315); border-radius:0 0 8px 8px; position:relative;
+  }
+  .laptop-base::after{
+    content:''; position:absolute; left:50%; top:0; transform:translateX(-50%);
+    width:15%; height:5px; background:#08080a; border-radius:0 0 6px 6px;
+  }
+
+  /* Estratégia — orbit mock */
+  .orbit-wrap{ display:flex; flex-direction:column; align-items:center; gap:30px; }
+  .radar-mock{ position:relative; width:180px; height:180px; flex-shrink:0; border-radius:50%; }
+  .radar-ring{ position:absolute; border:1px solid var(--line); border-radius:50%; }
+  .radar-ring.r1{ inset:0; }
+  .radar-ring.r2{ inset:17%; }
+  .radar-ring.r3{ inset:34%; }
+  .radar-cross{ position:absolute; inset:0; }
+  .radar-cross::before, .radar-cross::after{ content:''; position:absolute; background:var(--line); }
+  .radar-cross::before{ top:0; bottom:0; left:50%; width:1px; }
+  .radar-cross::after{ left:0; right:0; top:50%; height:1px; }
+  .radar-sweep{
+    position:absolute; inset:0; border-radius:50%; overflow:hidden;
+    background:conic-gradient(from 0deg, rgba(245,245,242,0.32), rgba(245,245,242,0) 30%);
+    animation:radarSpin 4s linear infinite;
+  }
+  @keyframes radarSpin{ to{ transform:rotate(360deg); } }
+  .radar-core{
+    position:absolute; top:50%; left:50%; width:7px; height:7px; margin:-3.5px 0 0 -3.5px;
+    border-radius:50%; background:var(--accent); box-shadow:0 0 10px var(--accent);
+  }
+  .radar-blip{
+    position:absolute; width:5px; height:5px; margin:-2.5px 0 0 -2.5px; border-radius:50%;
+    background:var(--ink); animation:radarBlip 2.6s ease-in-out infinite;
+  }
+  .radar-blip:nth-of-type(2){ animation-delay:.7s; }
+  .radar-blip:nth-of-type(3){ animation-delay:1.4s; }
+  @keyframes radarBlip{ 0%,100%{ opacity:.3; transform:scale(1); } 50%{ opacity:1; transform:scale(1.6); } }
+
+  .orbit-labels{ display:flex; flex-direction:row; flex-wrap:wrap; justify-content:center; gap:12px 26px; list-style:none; }
+  .orbit-labels li{
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--ink-dim);
+    position:relative; padding-left:18px;
+  }
+  .orbit-labels li::before{
+    content:''; position:absolute; left:0; top:50%; width:6px; height:6px; border-radius:50%;
+    background:var(--ink); transform:translateY(-50%);
+  }
+  .orbit-labels li:first-child::before{ background:var(--accent); box-shadow:0 0 8px var(--accent); }
+  @media (max-width:420px){ .orbit-labels{ justify-content:flex-start; } }
+
+  .services-head{ margin-bottom:90px; }
+  .services-head .eyebrow{ margin-bottom:18px; }
+  .services-head h2{ font-size:clamp(34px,5vw,58px); line-height:1.05; max-width:820px; }
 
   /* ---------- PHILOSOPHY ---------- */
   .philosophy{ position:relative; padding:170px 0; text-align:center; overflow:hidden; }
@@ -111,6 +257,11 @@
   }
   .philosophy p .accent{ color:var(--accent); }
 
+  /* efeito de elevação palavra-a-palavra ao entrar em viewport (reutilizável) */
+  .word-reveal .wm{ display:inline-block; overflow:hidden; vertical-align:top; }
+  .word-reveal .w{ display:inline-block; transform:translateY(120%); transition:transform .85s cubic-bezier(.16,1,.3,1); }
+  .word-reveal.in .w{ transform:translateY(0); }
+
   /* ---------- PROCESS ---------- */
   .process{ padding:0 0 150px; }
   .process-grid{ display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
@@ -121,6 +272,30 @@
   .process-cell p{ font-size:13.5px; color:var(--ink-dim); line-height:1.6; }
   @media (max-width:860px){ .process-grid{ grid-template-columns:1fr 1fr; } }
   @media (max-width:520px){ .process-grid{ grid-template-columns:1fr; } }
+
+  /* processo — lista vertical à esquerda + card dinâmico à direita */
+  .process-interactive{ display:grid; grid-template-columns:300px 1fr; gap:50px; border-top:1px solid var(--line); }
+  .process-list{ list-style:none; }
+  .process-item{
+    all:unset; box-sizing:border-box; cursor:pointer; display:flex; align-items:center; gap:18px;
+    width:100%; padding:26px 4px; border-bottom:1px solid var(--line); color:var(--ink-dim);
+    transition:color .3s ease;
+  }
+  .process-item .pnum{ font-family:'Anton',sans-serif; font-size:14px; color:var(--ink-dim); transition:color .3s ease; }
+  .process-item .ptitle{ font-size:20px; font-weight:600; letter-spacing:0.01em; }
+  .process-item:hover{ color:var(--ink); }
+  .process-item.active{ color:var(--ink); }
+  .process-item.active .pnum{ color:var(--accent); }
+  .process-card{
+    background:var(--bg-elev); border:1px solid var(--line); border-radius:18px; padding:48px;
+    min-height:280px; display:flex; flex-direction:column; justify-content:center;
+    transition:opacity .3s ease, transform .3s ease;
+  }
+  .process-card .pnum{ font-family:'Anton',sans-serif; font-size:15px; color:var(--accent); display:block; margin-bottom:18px; }
+  .process-card h3{ font-size:30px; margin-bottom:16px; }
+  .process-card p{ font-size:15.5px; color:var(--ink-dim); line-height:1.75; max-width:420px; }
+  .process-card.fade{ opacity:0; transform:translateY(8px); }
+  @media (max-width:760px){ .process-interactive{ grid-template-columns:1fr; gap:26px; } }
 
   /* ---------- CTA ---------- */
   .cta{ position:relative; padding:170px 0; text-align:center; overflow:hidden; border-top:1px solid var(--line); }
@@ -259,33 +434,92 @@
   <div class="scroll-cue"><span class="bar"></span> Scroll</div>
 </section>
 
+<!-- FEATURE — Design que representa -->
+<section class="feature">
+  <div class="glow"></div>
+  <div class="wrap feature-copy reveal">
+    <h2 data-word-elevate>Design que representa.<br>Experiências que geram impacto.</h2>
+    <p>Transformamos ideias em experiências digitais pensadas para marcas ambiciosas que querem destacar-se online.</p>
+  </div>
+</section>
+
 <!-- SERVICES -->
-<section class="services">
-  <div class="wrap">
-    <div class="svc-block reveal">
-      <div>
-        <span class="svc-num">01 / START</span>
-        <h3 class="svc-title display">Start</h3>
-        <p class="svc-text">Combinamos estratégia, design e digital para criar marcas que se destacam, comunicam e crescem — do zero ao lançamento.</p>
-        <span class="svc-tag">Branding & Lançamento</span>
-      </div>
+<section class="services" id="projetos">
+  <div class="wrap svc-wrap">
+    <div class="services-rail" aria-hidden="true">
+      <span class="rail-dot"></span>
+      <span class="rail-line"></span>
+      <span class="rail-label">Agência Digital</span>
     </div>
 
     <div class="svc-block reveal">
-      <div>
-        <span class="svc-num">02 / WEB</span>
-        <h3 class="svc-title display">Web</h3>
+      <div class="svc-copy">
+        <span class="svc-num display">02 /</span>
+        <h3 class="svc-title display" data-word-elevate>Web</h3>
         <p class="svc-text">Transformamos ideias em experiências digitais pensadas para representar marcas, comunicar com clareza e criar presença online.</p>
-        <span class="svc-tag">Sites & Produtos Digitais</span>
+        <a class="svc-tag magnetic-btn" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">
+          <span class="mb-fill" aria-hidden="true"></span>
+          <span class="mb-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+            Sites & Produtos Digitais
+          </span>
+        </a>
+      </div>
+      <div class="svc-visual reveal">
+        <div class="laptop-mock" aria-hidden="true">
+          <div class="laptop-screen">
+            <div class="laptop-topbar">
+              <span class="laptop-logo">S</span>
+              <nav class="laptop-nav">
+                <span>Home</span><span>Serviços</span><span>Sobre</span><span>Projectos</span>
+              </nav>
+              <span class="laptop-contact">Contacto</span>
+            </div>
+            <div class="laptop-hero">
+              <div class="laptop-mountain"></div>
+              <h4 class="laptop-title">Design que<br><span class="serif-em">representa.</span></h4>
+              <p class="laptop-sub">Criamos experiências digitais com propósito e foco em resultados.</p>
+              <span class="laptop-btn">Ver Projectos</span>
+            </div>
+          </div>
+          <div class="laptop-base"></div>
+        </div>
       </div>
     </div>
 
     <div class="svc-block reveal">
-      <div>
-        <span class="svc-num">03 / ESTRATÉGIA</span>
-        <h3 class="svc-title display">Estratégia</h3>
+      <div class="svc-copy">
+        <span class="svc-num display">03 /</span>
+        <h3 class="svc-title display" data-word-elevate>Estratégia</h3>
         <p class="svc-text">Combinamos estratégia, criatividade e pensamento digital para criar experiências que dão destaque às marcas.</p>
-        <span class="svc-tag">Especialistas em Estratégia</span>
+        <a class="svc-tag magnetic-btn" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">
+          <span class="mb-fill" aria-hidden="true"></span>
+          <span class="mb-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+            Especialistas em Estratégia
+          </span>
+        </a>
+      </div>
+      <div class="svc-visual tall reveal">
+        <div class="orbit-wrap">
+          <div class="radar-mock" aria-hidden="true">
+            <div class="radar-ring r1"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-ring r3"></div>
+            <div class="radar-cross"></div>
+            <div class="radar-sweep"></div>
+            <span class="radar-blip" style="top:28%; left:64%;"></span>
+            <span class="radar-blip" style="top:68%; left:38%;"></span>
+            <span class="radar-blip" style="top:44%; left:22%;"></span>
+            <span class="radar-core"></span>
+          </div>
+          <ul class="orbit-labels">
+            <li>Posicionamento</li>
+            <li>Estratégia</li>
+            <li>Design</li>
+            <li>Resultados</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -296,7 +530,7 @@
   <div class="glow"></div>
   <div class="wrap">
     <span class="eyebrow reveal">A filosofia</span>
-    <p class="reveal">Não construímos apenas presença digital.<br>Construímos a razão pela qual uma marca <span class="accent">é lembrada</span>.</p>
+    <p class="reveal" data-word-elevate>Não construímos apenas presença digital.<br>Construímos a razão pela qual uma marca <span class="accent">é lembrada</span>.</p>
   </div>
 </section>
 
@@ -305,36 +539,39 @@
   <div class="wrap">
     <div class="services-head reveal">
       <span class="eyebrow">Como trabalhamos</span>
-      <h2>Do primeiro contacto ao <span class="serif-em">lançamento</span>.</h2>
+      <h2 data-word-elevate>Do primeiro contacto ao <span class="serif-em">lançamento.</span></h2>
     </div>
-    <div class="process-grid reveal">
-      <div class="process-cell">
-        <span class="pnum display">01</span>
-        <div>
-          <h3>Descobrir</h3>
-          <p>Ouvimos o negócio, o mercado e o objetivo antes de desenhar qualquer solução.</p>
-        </div>
-      </div>
-      <div class="process-cell">
-        <span class="pnum display">02</span>
-        <div>
-          <h3>Estratégia</h3>
-          <p>Definimos posicionamento, tom e plano digital alinhados com o crescimento da marca.</p>
-        </div>
-      </div>
-      <div class="process-cell">
-        <span class="pnum display">03</span>
-        <div>
-          <h3>Design</h3>
-          <p>Criamos identidade e experiências visuais que comunicam com clareza e destaque.</p>
-        </div>
-      </div>
-      <div class="process-cell">
-        <span class="pnum display">04</span>
-        <div>
-          <h3>Lançar</h3>
-          <p>Colocamos tudo online — e acompanhamos os primeiros passos da marca no mundo digital.</p>
-        </div>
+    <div class="process-interactive reveal">
+      <ul class="process-list" role="tablist" aria-label="Etapas do processo">
+        <li role="presentation">
+          <button class="process-item active" role="tab" aria-selected="true" data-title="Descobrir" data-desc="Ouvimos o negócio, o mercado e o objetivo antes de desenhar qualquer solução.">
+            <span class="pnum display">01</span>
+            <span class="ptitle">Descobrir</span>
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="process-item" role="tab" aria-selected="false" data-title="Estratégia" data-desc="Definimos posicionamento, tom e plano digital alinhados com o crescimento da marca.">
+            <span class="pnum display">02</span>
+            <span class="ptitle">Estratégia</span>
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="process-item" role="tab" aria-selected="false" data-title="Design" data-desc="Criamos identidade e experiências visuais que comunicam com clareza e destaque.">
+            <span class="pnum display">03</span>
+            <span class="ptitle">Design</span>
+          </button>
+        </li>
+        <li role="presentation">
+          <button class="process-item" role="tab" aria-selected="false" data-title="Lançar" data-desc="Colocamos tudo online — e acompanhamos os primeiros passos da marca no mundo digital.">
+            <span class="pnum display">04</span>
+            <span class="ptitle">Lançar</span>
+          </button>
+        </li>
+      </ul>
+      <div class="process-card" id="processCard" role="tabpanel">
+        <span class="pnum display" id="processCardNum">01</span>
+        <h3 id="processCardTitle">Descobrir</h3>
+        <p id="processCardDesc">Ouvimos o negócio, o mercado e o objetivo antes de desenhar qualquer solução.</p>
       </div>
     </div>
   </div>
@@ -345,7 +582,7 @@
   <div class="glow"></div>
   <div class="wrap">
     <span class="eyebrow reveal">Vamos começar</span>
-    <h2 class="display reveal" style="margin-top:22px;">Pronto para <span class="serif-em">destacar</span><br>a sua marca?</h2>
+    <h2 class="display reveal" data-word-elevate style="margin-top:22px;">Pronto para <span class="serif-em">destacar</span><br>a sua marca?</h2>
     <div class="cta-actions reveal">
       <a class="cta-btn primary" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">Falar no Instagram</a>
       <a class="cta-btn ghost" href="https://instagram.com/sertoriagency" target="_blank" rel="noopener">@sertoriagency</a>
@@ -367,12 +604,152 @@
 </footer>
 
 <script>
+  // elevação palavra-a-palavra: envolve automaticamente cada palavra num
+  // span mascarado (preservando spans internos como .accent / .serif-em)
+  (function(){
+    function wrapWords(el){
+      let idx = 0;
+      function walk(node){
+        if(node.nodeType === Node.TEXT_NODE){
+          if(!node.textContent.trim()) return;
+          const parts = node.textContent.split(/(\s+)/);
+          const frag = document.createDocumentFragment();
+          parts.forEach(part => {
+            if(part === '') return;
+            if(/^\s+$/.test(part)){
+              frag.appendChild(document.createTextNode(part));
+            } else {
+              const mask = document.createElement('span');
+              mask.className = 'wm';
+              mask.style.transitionDelay = (idx * 55) + 'ms';
+              idx++;
+              const word = document.createElement('span');
+              word.className = 'w';
+              word.textContent = part;
+              mask.appendChild(word);
+              frag.appendChild(mask);
+            }
+          });
+          node.replaceWith(frag);
+        } else if(node.nodeType === Node.ELEMENT_NODE){
+          if(node.tagName === 'BR') return;
+          Array.from(node.childNodes).forEach(walk);
+        }
+      }
+      Array.from(el.childNodes).forEach(walk);
+      el.classList.add('word-reveal');
+    }
+    document.querySelectorAll('[data-word-elevate]').forEach(wrapWords);
+  })();
+
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
     });
   }, { threshold:0.15 });
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // efeito de elevação palavra-a-palavra (títulos marcados com data-word-elevate)
+  const iow = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); iow.unobserve(e.target); }
+    });
+  }, { threshold:0.4 });
+  document.querySelectorAll('.word-reveal').forEach(el=>iow.observe(el));
+</script>
+
+<script>
+  // PROCESSO — lista clicável à esquerda que abre um card com a descrição do passo
+  (function(){
+    const items = document.querySelectorAll('.process-item');
+    const card = document.getElementById('processCard');
+    const cardNum = document.getElementById('processCardNum');
+    const cardTitle = document.getElementById('processCardTitle');
+    const cardDesc = document.getElementById('processCardDesc');
+    if(!items.length || !card) return;
+
+    items.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        if(btn.classList.contains('active')) return;
+        items.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected','true');
+
+        card.classList.add('fade');
+        setTimeout(() => {
+          cardNum.textContent = String(idx + 1).padStart(2, '0');
+          cardTitle.textContent = btn.dataset.title;
+          cardDesc.textContent = btn.dataset.desc;
+          card.classList.remove('fade');
+        }, 180);
+      });
+    });
+  })();
+</script>
+
+<script>
+  // MAGNETIC BUTTON — replica em vanilla JS a lógica do componente
+  // Magnetic Hover Button (originkit): puxa o botão em direção ao cursor
+  // dentro de um raio de alcance, e expande um preenchimento a partir
+  // do ponto de entrada do cursor.
+  (function(){
+    const buttons = document.querySelectorAll('.magnetic-btn');
+    if(!buttons.length) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced) return;
+
+    const RANGE_PER_POINT = 18;
+    const MAX_PULL = 0.5;
+    const MAGNET = 5; // força magnética (equivalente à prop `magnet` do componente)
+    const reach = MAGNET * RANGE_PER_POINT;
+    const pull = (MAGNET / 20) * MAX_PULL;
+
+    buttons.forEach(btn => {
+      let hover = false;
+
+      function onMove(e){
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+
+        const inside =
+          e.clientX >= rect.left && e.clientX <= rect.right &&
+          e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+        const edgeX = Math.max(0, Math.abs(dx) - rect.width / 2);
+        const edgeY = Math.max(0, Math.abs(dy) - rect.height / 2);
+        const gap = Math.hypot(edgeX, edgeY);
+
+        if(inside !== hover){
+          hover = inside;
+          btn.classList.toggle('hover', inside);
+          if(inside){
+            const lx = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+            const ly = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+            const d = 2 * Math.hypot(rect.width, rect.height);
+            btn.style.setProperty('--sx', lx + 'px');
+            btn.style.setProperty('--sy', ly + 'px');
+            btn.style.setProperty('--sd', d + 'px');
+          }
+        }
+
+        if(gap > reach){
+          btn.style.transform = '';
+          return;
+        }
+        const falloff = reach === 0 ? 0 : 1 - gap / reach;
+        btn.style.transform = `translate(${(dx * pull * falloff).toFixed(2)}px, ${(dy * pull * falloff).toFixed(2)}px)`;
+      }
+
+      window.addEventListener('pointermove', onMove);
+    });
+
+    document.addEventListener('pointerleave', () => {
+      buttons.forEach(btn => { btn.style.transform = ''; btn.classList.remove('hover'); });
+    });
+  })();
 </script>
 
 <script>
